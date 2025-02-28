@@ -1,0 +1,61 @@
+version: 1
+
+script:
+  - mkdir -p AppDir/usr
+  - cp -r /usr/bin/klayout AppDir/usr/bin/
+  - cp -r /usr/share/klayout AppDir/usr/share/
+  - cp -r /usr/lib/*-linux-gnu/libklayout* AppDir/usr/lib/
+
+AppDir:
+  path: ./AppDir
+  app_info:
+    id: klayout
+    name: KLayout
+    icon: klayout
+    version: "1.0"
+    exec: usr/bin/klayout
+    exec_args: \$@
+  apt:
+    arch: amd64
+    sources:
+      - sourcelist: |
+          deb http://archive.ubuntu.com/ubuntu jammy main universe
+      - sourcelist: |
+          deb http://security.ubuntu.com/ubuntu jammy-security main universe
+    include:
+      # C++ toolchain
+      - gcc
+      - g++
+      - make
+      
+      # Qt & Development Tools
+      - qt5-default
+      - qttools5-dev
+      - libqt5xmlpatterns5-dev
+      - qtmultimedia5-dev
+      - libqt5multimediawidgets5
+      - libqt5svg5-dev
+
+      # Ruby
+      - ruby
+      - ruby-dev
+
+      # Python
+      - python3
+      - python3-dev
+
+      # zlib
+      - libz-dev
+
+      # libgit2
+      - libgit2-dev
+
+  runtime:
+    env:
+      PATH: "\$APPDIR/usr/bin:\$PATH"
+      LD_LIBRARY_PATH: "\$APPDIR/usr/lib:\$LD_LIBRARY_PATH"
+
+AppImage:
+  arch: x86_64
+  update-information: gh-releases-zsync|aissus|klayout-appimage|latest|*x86_64.AppImage.zsync
+  sign-key: None
