@@ -2,9 +2,8 @@ version: 1
 
 script:
   - mkdir -p AppDir/usr
-  - cp -r /usr/bin/klayout AppDir/usr/bin/
-  - cp -r /usr/share/klayout AppDir/usr/share/
-  - cp -r /usr/lib/*-linux-gnu/libklayout* AppDir/usr/lib/
+  - cp -r /home/vncuser/Downloads/klayout_build/klayout-0.29.11/build/bin/* AppDir/usr/bin/
+  - cp -r /home/vncuser/Downloads/klayout_build/klayout-0.29.11/build/lib/* AppDir/usr/lib/
 
 AppDir:
   path: ./AppDir
@@ -12,7 +11,7 @@ AppDir:
     id: klayout
     name: KLayout
     icon: klayout
-    version: "1.0"
+    version: "0.29.11"
     exec: usr/bin/klayout
     exec_args: \$@
   apt:
@@ -23,31 +22,15 @@ AppDir:
       - sourcelist: |
           deb http://security.ubuntu.com/ubuntu jammy-security main universe
     include:
-      # C++ toolchain
-      - gcc
-      - g++
-      - make
-      
-      # Qt & Development Tools
-      - qt5-default
-      - qttools5-dev
-      - libqt5xmlpatterns5-dev
-      - qtmultimedia5-dev
+      - libqt5core5a
+      - libqt5gui5
+      - libqt5widgets5
+      - libqt5xml5
+      - libqt5xmlpatterns5
+      - libqt5multimedia5
       - libqt5multimediawidgets5
-      - libqt5svg5-dev
-
-      # Ruby
-      - ruby
-      - ruby-dev
-
-      # Python
-      - python3
-      - python3-dev
-
-      # zlib
+      - libqt5svg5
       - libz-dev
-
-      # libgit2
       - libgit2-dev
 
   runtime:
